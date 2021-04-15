@@ -59,6 +59,7 @@ json_response1 = response1.json()
 print(json.dumps(json_response1, sort_keys=True, indent=4))
 coordinates1 = json_response1['features'][0]['geometry']['coordinates']
 name = json_response1['features'][0]['properties']['CompanyMetaData']['Categories'][0]['name']
+address = json_response1['features'][0]['properties']['CompanyMetaData']['address']
 EveryDayTime = json_response1['features'][0]['properties']['CompanyMetaData']['Hours']['Availabilities'][0]['Everyday']
 FromTime = json_response1['features'][0]['properties']['CompanyMetaData']['Hours']['Availabilities'][0]['Intervals'][0]['from']
 ToTime = json_response1['features'][0]['properties']['CompanyMetaData']['Hours']['Availabilities'][0]['Intervals'][0]['to']
@@ -77,7 +78,9 @@ map_api_server = "http://static-maps.yandex.ru/1.x/"
 response = requests.get(map_api_server, params=map_params)
 
 orgDelta = (abs(float(coordinates1[0]) - float(position[0])) + abs(float(coordinates1[1]) - float(position[1]))) * 111
-print('Расстояние: ', orgDelta * 1000, 'метров')
+print('Название:', name)
+print('Адресс:', address)
+print('Расстояние: ', orgDelta * 1000 // 0.1, 'метров')
 if EveryDayTime:
     print('Режим работы: круглосуточно')
 else:
